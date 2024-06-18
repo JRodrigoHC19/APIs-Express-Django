@@ -1,0 +1,61 @@
+version: '3'
+
+services:
+  db-mongodb:
+    image: mongo
+    container_name: db-mongodb
+    ports:
+      - "27017:27017"
+    networks:
+      - some-network
+    volumes:
+      - data-mongodb:/data/db
+
+  api-data:
+    build:
+      context: ./data
+      dockerfile: Dockerfile
+    container_name: api-express-data
+    ports:
+      - "8080:8080"
+    networks:
+      - some-network
+    environment:
+      - MONGODB_URL=mongodb://db-mongodb:27017/tecsup
+      - URL_BASE=http://localhost:4200
+      - PORT=8080
+    depends_on:
+      - db-mongodb
+  
+  api-websocket:
+    build: 
+      context: ./websocket
+      dockerfile: Dockerfile
+    container_name: api-express-websocket
+    ports:
+      - "8040:8040"
+    networks:
+      - some-network
+    environment:
+      - URL_BASE=http://localhost:4200
+      - PORT=8040
+      
+  api-auth:
+    build:
+      context: ./auth
+      dockerfile: Dockerfile
+    container_name: api-django-auth
+    ports:
+      - "8000:8000"
+    networks:
+      - some-network
+
+
+networks:
+  some-network:
+    driver: bridge
+
+
+volumes:
+  data-mongodb:
+  # data-sqlite:
