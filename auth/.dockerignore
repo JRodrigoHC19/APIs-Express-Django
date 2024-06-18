@@ -2,4 +2,4 @@ README.md
 
 .gitignore
 
-"Django Authentication API - JWT.postman_collection.json"
+db.sqlite3

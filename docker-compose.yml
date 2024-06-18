@@ -1,8 +1,21 @@
-version: '3'
+version: '3.8'
 
 services:
+  db-mysql:
+    image: mysql:latest
+    container_name: db-mysql
+    ports:
+      - "3306:3306"
+    networks:
+      - some-network
+    environment:
+      - MYSQL_ROOT_PASSWORD=admin
+      - MYSQL_DATABASE=tecsup
+    volumes:
+      - data-mysql:/var/lib/mysql
+
   db-mongodb:
-    image: mongo
+    image: mongo:latest
     container_name: db-mongodb
     ports:
       - "27017:27017"
@@ -26,7 +39,7 @@ services:
       - PORT=8080
     depends_on:
       - db-mongodb
-  
+
   api-websocket:
     build: 
       context: ./websocket
@@ -39,23 +52,31 @@ services:
     environment:
       - URL_BASE=http://localhost:4200
       - PORT=8040
-      
+
   api-auth:
     build:
       context: ./auth
       dockerfile: Dockerfile
     container_name: api-django-auth
+    environment:
+      - DATABASE_HOST=db-mysql
+      - DATABASE_NAME=tecsup
+      - DATABASE_USER=root
+      - DATABASE_PASSWORD=admin
     ports:
       - "8000:8000"
     networks:
       - some-network
-
+    depends_on:
+      - db-mysql
+      - db-mongodb
+      - api-data
+      - api-websocket
 
 networks:
   some-network:
     driver: bridge
 
-
 volumes:
   data-mongodb:
-  # data-sqlite:
+  data-mysql:

@@ -1,5 +1,3 @@
-require("dotenv").config();
-
 const bodyParser = require("body-parser");
 const express = require('express');
 const http = require('http');
@@ -31,16 +29,14 @@ app.use(bodyParser.urlencoded({ extended: false }));
 
 io.on('connection', (socket) => {
     const idHandShake = socket.id;
-
+    
     const { nameRoom } = socket.handshake.query;
 
-    console.log(`Hola dispositivo ${idHandShake} -> ${nameRoom}`);
+    console.log(`dispositivo '${idHandShake}' conectado en '${nameRoom}'.`);
 
     socket.join(nameRoom);
 
     socket.on('event', (res) => {
-        console.log(res);
-
         socket.to(nameRoom).emit('event', res);
     });
 
@@ -51,5 +47,5 @@ io.on('connection', (socket) => {
 
 
 server.listen(process.env.PORT, () => {
-    console.log("Servidor WebSocket Iniciado en el puerto: 5000");
+    console.log(`Server WebSocket started on port ${process.env.PORT}`);
 });

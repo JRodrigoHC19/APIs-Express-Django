@@ -1,5 +1,3 @@
-// require("dotenv").config();
-
 const express = require("express");
 const bodyParser = require("body-parser");
 const mongoose = require("mongoose");
@@ -29,7 +27,7 @@ app.use("/messages", messageRouter);
 
 
 app.listen(process.env.PORT, () => {
-  console.log(`Server started on port ${process.env.PORT}`);
+  console.log(`Server API MongoDB started on port ${process.env.PORT}`);
 });
 
 
