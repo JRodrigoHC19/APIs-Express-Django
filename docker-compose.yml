@@ -37,8 +37,14 @@ services:
       - MONGODB_URL=mongodb://db-mongodb:27017/tecsup
       - URL_BASE=http://localhost:4200
       - PORT=8080
+      - MYSQL_HOST=db-mysql
+      - MYSQL_PORT=3306
+      - MYSQL_DATABASE=tecsup
+      - MYSQL_USERNAME=root
+      - MYSQL_PASSWORD=admin
     depends_on:
       - db-mongodb
+      - db-mysql
 
   api-websocket:
     build: 

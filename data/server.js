@@ -3,6 +3,7 @@ const bodyParser = require("body-parser");
 const mongoose = require("mongoose");
 
 const messageRouter = require("./routes/messages");
+const usersRouter = require("./routes/users");
 
 
 const app = express();
@@ -24,6 +25,7 @@ app.use((req, res, next) => {
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(express.json());
 app.use("/messages", messageRouter);
+app.use("/users", usersRouter);
 
 
 app.listen(process.env.PORT, () => {
