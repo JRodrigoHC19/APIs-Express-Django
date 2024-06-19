@@ -19,8 +19,30 @@ const getOneTasks = async (id) => {
     return query;
 }
 
+const getOneChannel = async (id) => {
+    const statement = `
+        SELECT *
+        FROM account_qrcode 
+        WHERE user_id = ?;
+    `;
+    const [query] = await connection.execute(statement, [id]);
+    return query;
+}
+
+const postOneChanel = async (id, name) => {
+    const statement = ` 
+        INSERT INTO account_qrcode (user_id, nameChannel) 
+        VALUES (?, ?);
+    `;
+    const [query] = await connection.execute(statement, [id, name]);
+    return query;
+}
+
+
 
 module.exports = {
     getAllTasks,
-    getOneTasks
+    getOneTasks,
+    getOneChannel,
+    postOneChanel
 };

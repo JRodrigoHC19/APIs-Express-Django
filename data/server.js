@@ -4,6 +4,7 @@ const mongoose = require("mongoose");
 
 const messageRouter = require("./routes/messages");
 const usersRouter = require("./routes/users");
+const channelsRouter = require("./routes/channels");
 
 
 const app = express();
@@ -26,6 +27,7 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(express.json());
 app.use("/messages", messageRouter);
 app.use("/users", usersRouter);
+app.use("/channels", channelsRouter);
 
 
 app.listen(process.env.PORT, () => {
