@@ -9,8 +9,8 @@ services:
     networks:
       - some-network
     environment:
-      - MYSQL_ROOT_PASSWORD=admin
-      - MYSQL_DATABASE=tecsup
+      - MYSQL_ROOT_PASSWORD=${DATABASE_PASSWORD}
+      - MYSQL_DATABASE=${DATABASE_NAME}
     volumes:
       - data-mysql:/var/lib/mysql
 
@@ -34,14 +34,14 @@ services:
     networks:
       - some-network
     environment:
-      - MONGODB_URL=mongodb://db-mongodb:27017/tecsup
-      - URL_BASE=http://localhost:4200
       - PORT=8080
+      - MONGODB_URL=${URL_MONGODB}
+      - URL_BASE=${URL_WEB}
       - MYSQL_HOST=db-mysql
       - MYSQL_PORT=3306
-      - MYSQL_DATABASE=tecsup
-      - MYSQL_USERNAME=root
-      - MYSQL_PASSWORD=admin
+      - MYSQL_DATABASE=${DATABASE_NAME}
+      - MYSQL_USERNAME=${DATABASE_USER}
+      - MYSQL_PASSWORD=${DATABASE_PASSWORD}
     depends_on:
       - db-mongodb
       - db-mysql
@@ -56,7 +56,7 @@ services:
     networks:
       - some-network
     environment:
-      - URL_BASE=http://localhost:4200
+      - URL_BASE=${URL_WEB}
       - PORT=8040
 
   api-auth:
@@ -70,16 +70,32 @@ services:
       - some-network
     environment:
       - DATABASE_HOST=db-mysql
-      - DATABASE_NAME=tecsup
-      - DATABASE_USER=root
-      - DATABASE_PORT=3306
-      - DATABASE_PASSWORD=admin
-      - URL_BASE=http://localhost:4200
+      - DATABASE_NAME=${DATABASE_NAME}
+      - DATABASE_USER=${DATABASE_USER}
+      - DATABASE_PASSWORD=${DATABASE_PASSWORD}
+      - URL_BASE=${URL_WEB}
     depends_on:
       - db-mysql
       - db-mongodb
       - api-data
       - api-websocket
+
+  api-mqtt-websocket:
+    build: 
+      context: ./mqtt-websocket
+      dockerfile: Dockerfile
+    container_name: api-express-websocket-mqtt
+    ports:
+      - "8060:8060"
+    networks:
+      - some-network
+    environment:
+      - PORT=8060
+      - URL_BASE=${URL_WEB}
+      - MQTT_URL=${MQTT_URL}
+      - MQTT_CLIENT_ID=${MQTT_CLIENT_ID}
+      - MQTT_USERNAME=${MQTT_USERNAME}
+      - MQTT_PASSWORD=${MQTT_PWD}
 
 networks:
   some-network:
