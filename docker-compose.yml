@@ -80,26 +80,11 @@ services:
       - api-data
       - api-websocket
 
-  api-mqtt-websocket:
-    build: 
-      context: ./mqtt-websocket
-      dockerfile: Dockerfile
-    container_name: api-express-websocket-mqtt
-    ports:
-      - "8060:8060"
-    networks:
-      - some-network
-    environment:
-      - PORT=8060
-      - URL_BASE=${URL_WEB}
-      - MQTT_URL=${MQTT_URL}
-      - MQTT_CLIENT_ID=${MQTT_CLIENT_ID}
-      - MQTT_USERNAME=${MQTT_USERNAME}
-      - MQTT_PASSWORD=${MQTT_PWD}
 
 networks:
   some-network:
     driver: bridge
+
 
 volumes:
   data-mongodb:
