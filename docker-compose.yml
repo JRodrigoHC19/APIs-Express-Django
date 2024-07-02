@@ -88,7 +88,9 @@ services:
     container_name: api-express-mqtt
     ports:
       - "8060:8060"
+
     networks:
+
       - some-network
     environment:
       - URL_BASE=${URL_WEB}
@@ -97,7 +99,6 @@ services:
       - MQTT_CLIENT_ID=${MQTT_CLIENT_ID}
       - MQTT_USERNAME=${MQTT_USERNAME}
       - MQTT_PWD=${MQTT_PWD}
-      - MQTT_URL=${MQTT_URL}
       - MQTT_URL=${MQTT_URL}
     depends_on:
       - db-mongodb
