@@ -1,0 +1,26 @@
+{
+  "name": "express-websocket-api",
+  "version": "1.0.0",
+  "main": "server.js",
+  "type": "module",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "dev": "nodemon server.js",
+    "prod": "node server.js"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "description": "",
+  "dependencies": {
+    "body-parse": "0.1.0",
+    "cors": "2.8.5",
+    "express": "4.19.2",
+    "mongoose": "8.4.3",
+    "mqtt": "5.7.2",
+    "socket.io": "4.7.5"
+  },
+  "devDependencies": {
+    "nodemon": "^3.1.3"
+  }
+}
