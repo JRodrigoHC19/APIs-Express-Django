@@ -24,9 +24,11 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = 'django-insecure-*u&t2fgq01-89d^frp0(1nos535d3fc9&d#hd^0v5kbq=tgyky'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = [
+    "http://localhost:4200"
+]
 
 
 # Application definition
@@ -181,6 +183,7 @@ SIMPLE_JWT = {
 
 CORS_ALLOWED_ORIGINS = [
     os.getenv('URL_BASE'),
+    "http://localhost:4200"
 ]
 
 PASSWORD_RESET_TIMEOUT = 900

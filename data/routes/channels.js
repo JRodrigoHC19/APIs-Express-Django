@@ -16,4 +16,11 @@ router.post("/", async (req, res) => {
     res.json(query);
 });
 
+router.get("table/create", async (req, res) => {
+    query = await querys.createTableQRcode();
+    res.json({
+        "menssage": "table QRcode creada correctamente!"
+    });
+});
+
 module.exports = router;

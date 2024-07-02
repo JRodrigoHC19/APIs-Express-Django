@@ -38,11 +38,25 @@ const postOneChanel = async (id, name) => {
     return query;
 }
 
-
+const createTableQRcode = async () => {
+    const statement = `
+        CREATE TABLE account_qrcode (
+           id bigint NOT NULL AUTO_INCREMENT,
+            user_id bigint DEFAULT NULL,
+            nameChannel varchar(255) DEFAULT NULL,
+            PRIMARY KEY (id),
+            KEY user_id (user_id),
+            CONSTRAINT account_qrcode_ibfk_1 FOREIGN KEY (user_id) REFERENCES account_user (id)
+        );
+    `;
+    const [query] = await connection.execute(statement);
+    return query;
+}
 
 module.exports = {
     getAllTasks,
     getOneTasks,
     getOneChannel,
-    postOneChanel
+    postOneChanel,
+    createTableQRcode
 };
